@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Hover Rows</h2>
+  <p>The .table-hover class enables a hover state on table rows:</p>
+  <table class="table table-hover" id="myTable">
+    <thead>
+      <tr>
+        <th>First Off</th>
+        <th>Product Lane</th>
+        <th>Part Number</th>
+        <th>Time in</th>
+        <th>Status</th>
+        <th>Time out</th>
+        <th>Duration</th>
+        <th>Employee</th>
+
+      </tr>
+    </thead>
+    <tbody>
+     
+    </tbody>
+  </table>
+</div>
+
+<script>
+
+window.onload = function()
+{
+	addOperationDetails();
+}
+window.addOperationDetails = function()
+{
+		
+		fetch("/hariEmp/api/v1/operations?limit=15")
+		.then(response => response.json())
+		  .then(data => {
+			  	rederRows(data);
+			  });
+}
+
+window.rederRows = function(data)
+{
+		for(let i=0;i<data.length;i++)
+		{
+			addRow(data[i]);
+		}
+}
+
+window.addRow = function(data)
+{
+
+	var table = document.getElementById("myTable");
+	var row = table.insertRow(-1);
+	
+	var FIRST_OFF = row.insertCell(0);
+	FIRST_OFF.innerHTML = data.FIRST_OFF;
+	
+	var PRODUCT_LANE = row.insertCell(1);
+	PRODUCT_LANE.innerHTML = data.PRODUCT_LANE;
+	
+	var PART_NUMBER = row.insertCell(2);
+	PART_NUMBER.innerHTML = data.PART_NUMBER;
+	
+	var TIME_IN = row.insertCell(3);
+	TIME_IN.innerHTML = data.TIME_IN;
+	
+	var STATUS = row.insertCell(4);
+	STATUS.innerHTML = data.STATUS;
+	
+	var TIME_OUT = row.insertCell(5);
+	TIME_OUT.innerHTML = data.TIME_OUT;
+	
+	var DURATION = row.insertCell(6);
+	DURATION.innerHTML = data.DURATION;
+	
+	var NAME = row.insertCell(7);
+	NAME.innerHTML = data.USER_NAME;
+}
+	
+</script>
+</body>
+</html>

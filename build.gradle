@@ -1,0 +1,32 @@
+plugins{
+  id 'java'
+  id 'war'
+  id 'groovy'
+  id 'org.springframework.boot' version '2.4.2'
+  id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+group 'com.employee'
+version '1.0'
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'groovy'
+
+sourceCompatibility=1.8
+
+repositories{
+  mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.16'
+	implementation group: 'org.json', name: 'json', version: '20180813'
+	
+}
+
+test {
+	useJUnitPlatform()
+}
