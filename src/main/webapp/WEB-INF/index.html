@@ -180,12 +180,14 @@ window.validateLogin = function()
 	var pass = document.getElementById("pwd").value;
 	if(userName || pass)
 	{	
-		fetch("/hariEmp/api/v1/isValidUser?userName=mahesh&password=khannat")
+		fetch("/Linamar/api/v1/isValidUser?userName="+userName+"&password="+pass)
 		.then(response => response.json())
 		  .then(data => {
-			  	if(data.isValid)
+			  	if(data.ID && data.ID > 0)
 			  		{
-			  		
+			  			let url = window.location.origin+"/Linamar/html/simple.html?id=" + encodeURIComponent(data.ID);
+
+			  	    		document.location.href = url;
 			  		}
 			  	else{
 			  		alert("Username / Password is wrong");

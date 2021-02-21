@@ -42,7 +42,7 @@ window.onload = function()
 window.addOperationDetails = function()
 {
 		
-		fetch("/hariEmp/api/v1/operations?limit=15")
+		fetch("/Linamar/api/v1/operations?limit=15")
 		.then(response => response.json())
 		  .then(data => {
 			  	rederRows(data);
@@ -73,19 +73,40 @@ window.addRow = function(data)
 	PART_NUMBER.innerHTML = data.PART_NUMBER;
 	
 	var TIME_IN = row.insertCell(3);
-	TIME_IN.innerHTML = data.TIME_IN;
+	TIME_IN.innerHTML = new Date(data.TIME_IN).toGMTString();
 	
 	var STATUS = row.insertCell(4);
 	STATUS.innerHTML = data.STATUS;
 	
 	var TIME_OUT = row.insertCell(5);
-	TIME_OUT.innerHTML = data.TIME_OUT;
+	TIME_OUT.innerHTML = new Date(data.TIME_OUT).toGMTString();
 	
 	var DURATION = row.insertCell(6);
-	DURATION.innerHTML = data.DURATION;
+	DURATION.innerHTML = timeConversion(data.DURATION);
 	
 	var NAME = row.insertCell(7);
 	NAME.innerHTML = data.USER_NAME;
+}
+
+window.timeConversion = function(millisec)
+{
+	        var seconds = (millisec / 1000).toFixed(1);
+
+	        var minutes = (millisec / (1000 * 60)).toFixed(1);
+
+	        var hours = (millisec / (1000 * 60 * 60)).toFixed(1);
+
+	        var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
+
+	        if (seconds < 60) {
+	            return seconds + " Sec";
+	        } else if (minutes < 60) {
+	            return minutes + " Min";
+	        } else if (hours < 24) {
+	            return hours + " Hrs";
+	        } else {
+	            return days + " Days"
+	        }
 }
 	
 </script>

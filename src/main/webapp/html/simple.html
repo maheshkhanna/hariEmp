@@ -23,28 +23,83 @@
     </div>
     <div class="form-group">
       <label for="PLane">Product Lane:</label>
-      <input type="text" class="form-control" id="pl" placeholder="Enter Product Lane" name="Plane">
+      <input type="text" class="form-control" id="prdlane" placeholder="Enter Product Lane" name="Plane">
     </div>
   <div class="form-group">
     <label for="PNum">Part Number</label>
-    <input type="text" class="form-control" id="pl" placeholder="Enter Part Number" name="PNum">
+    <input type="text" class="form-control" id="partNum" placeholder="Enter Part Number" name="PNum">
   </div>
   <div class="form-group">
     <label for="Tin">Time In</label>
-    <input type="text" class="form-control" id="Ti" placeholder="Enter Time inr" name="Tin">
+    <input type="datetime-local" class="form-control" id="Ti" placeholder="Enter Time inr" name="Tin">
   </div>
   <div class="form-group">
-      <input type="radio" name="Status" value="Accpt"> Accepted
-      <input type="radio" name="Status" value="REj"> Rejected
+  <label for="Tin">Status</label>
+	  <select class="form-group" id="Status">
+	      <option value="Accepted" selected>Accepted</option>
+	      <option value="Rejected">Rejected</option>
+	</select>
 </div>
     <div class="form-group">
       <label for="Tout">Time In</label>
-      <input type="text" class="form-control" id="To" placeholder="Enter Time out" name="Tin">
+      <input type="datetime-local" class="form-control" id="To" placeholder="Enter Time out" name="Tin">
     </div>
 
-    <button class="btn btn-primary">Submit</button>
+    <button class="btn btn-primary" onclick="storeOperationDetails()">Submit</button>
   </form>
 </div>
+
+<script>
+	var userId = "";
+	window.onload = function () {
+	    var url = document.location.href,
+	        params = url.split('?')[1].split('&'),
+	        data = {}, tmp;
+	    for (var i = 0, l = params.length; i < l; i++) {
+	         tmp = params[i].split('=');
+	         data[tmp[0]] = tmp[1];
+	    }
+	    userId = data.id;
+	}
+	window.storeOperationDetails = function()
+	{
+		var operation = {};
+		
+		if(userId != undefined)
+		{
+			operation.USER_ID = userId;
+			operation.FIRST_OFF = document.getElementById("firstoff").value;
+			operation.PRODUCT_LANE = document.getElementById("prdlane").value;
+			operation.PART_NUMBER = document.getElementById("partNum").value;
+			operation.STATUS = document.getElementById("Status").value;
+			operation.TIME_IN = document.getElementById("Ti").valueAsNumber;
+			operation.TIME_OUT = document.getElementById("To").valueAsNumber;
+			console.log(operation);
+			
+			fetch("/Linamar/api/v1/operation",{method: "POST",body: JSON.stringify(operation)})
+			.then(response => response.json())
+			  .then(data => {
+				  	if(data.message && data.message == "success" )
+				  	{
+				  		alert("Data added successfully");
+				  		let url = window.location.origin+"/Linamar/html/index.html";
+		  	    			document.location.href = url;
+				  	}
+				  	else{
+				  		alert("Error in adding data");
+				  	}
+				  });
+			
+		}
+		else
+		{
+			alert("Invalid user . Please login again");
+		}
+		
+	}
+		
+	
+</script>
 
 </body>
 </html>

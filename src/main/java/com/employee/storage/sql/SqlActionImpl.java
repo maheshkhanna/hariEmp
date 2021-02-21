@@ -3,6 +3,7 @@ package com.employee.storage.sql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -39,6 +40,12 @@ public class SqlActionImpl {
 		Statement stmt=connection.createStatement();  
 		ResultSet rs=stmt.executeQuery(query); 
 		return convert(rs);
+	}
+	
+	public void executeDataManipulationQuery(String query) throws SQLException
+	{
+		PreparedStatement pstmt = connection.prepareStatement(query);
+		pstmt.executeUpdate();
 	}
 	
 	public static void main(String[] args) throws Exception {
