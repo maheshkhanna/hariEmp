@@ -45,7 +45,7 @@
       <input type="datetime-local" class="form-control" id="To" placeholder="Enter Time out" name="Tin">
     </div>
 
-    <button class="btn btn-primary" onclick="storeOperationDetails()">Submit</button>
+    <button class="btn btn-primary" onclick="storeOperationDetails(event)">Submit</button>
   </form>
 </div>
 
@@ -61,8 +61,9 @@
 	    }
 	    userId = data.id;
 	}
-	window.storeOperationDetails = function()
+	window.storeOperationDetails = function(event)
 	{
+		event.preventDefault();
 		var operation = {};
 		
 		if(userId != undefined)

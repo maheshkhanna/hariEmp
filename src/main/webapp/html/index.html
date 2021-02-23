@@ -150,7 +150,7 @@ span.psw {
       <label for="psw"><b>Password</b></label>
       <input type="password" placeholder="Enter Password" id="pwd" name="psw" required>
 
-      <button onclick="validateLogin()">Login</button>
+      <button onclick="validateLogin(event)">Login</button>
       <label>
         <input type="checkbox" checked="checked" name="remember"> Remember me
       </label>
@@ -174,8 +174,9 @@ window.onclick = function(event) {
     }
 }
 
-window.validateLogin = function()
+window.validateLogin = function(event)
 {
+	event.preventDefault();
 	var userName = document.getElementById("uname").value;
 	var pass = document.getElementById("pwd").value;
 	if(userName || pass)
